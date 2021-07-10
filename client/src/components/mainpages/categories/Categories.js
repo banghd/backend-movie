@@ -15,14 +15,22 @@ function Categories() {
         e.preventDefault()
         try {
             if(onEdit){
-                const res = await axios.put(`/api/category/${id}`, {name: category}, {
-                    headers: {Authorization: token}
-                })
+                const res = await axios.put(
+                  `http://localhost:5000/api/category/${id}`,
+                  { name: category },
+                  {
+                    headers: { Authorization: token },
+                  }
+                );
                 alert(res.data.msg)
             }else{
-                const res = await axios.post('/api/category', {name: category}, {
-                    headers: {Authorization: token}
-                })
+                const res = await axios.post(
+                  'http://localhost:5000/api/category',
+                  { name: category },
+                  {
+                    headers: { Authorization: token },
+                  }
+                );
                 alert(res.data.msg)
             }
             setOnEdit(false)
@@ -42,9 +50,12 @@ function Categories() {
 
     const deleteCategory = async id =>{
         try {
-            const res = await axios.delete(`/api/category/${id}`, {
-                headers: {Authorization: token}
-            })
+            const res = await axios.delete(
+              `http://localhost:5000/api/category/${id}`,
+              {
+                headers: { Authorization: token },
+              }
+            );
             alert(res.data.msg)
             setCallback(!callback)
         } catch (err) {

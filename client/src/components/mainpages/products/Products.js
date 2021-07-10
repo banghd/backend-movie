@@ -26,12 +26,19 @@ function Products() {
     const deleteProduct = async(id, public_id) => {
         try {
             setLoading(true)
-            const destroyImg = axios.post('/api/destroy', {public_id},{
-                headers: {Authorization: token}
-            })
-            const deleteProduct = axios.delete(`/api/products/${id}`, {
-                headers: {Authorization: token}
-            })
+            const destroyImg = axios.post(
+              'http://localhost:5000/api/destroy',
+              { public_id },
+              {
+                headers: { Authorization: token },
+              }
+            );
+            const deleteProduct = axios.delete(
+              `http://localhost:5000/api/products/${id}`,
+              {
+                headers: { Authorization: token },
+              }
+            );
 
             await destroyImg
             await deleteProduct

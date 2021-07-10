@@ -15,7 +15,9 @@ function Register() {
     const registerSubmit = async e =>{
         e.preventDefault()
         try {
-            await axios.post('/user/register', {...user})
+            await axios.post('http://localhost:5000/user/register', {
+              ...user,
+            });
 
             localStorage.setItem('firstLogin', true)
 

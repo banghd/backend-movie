@@ -66,9 +66,16 @@ function CreateProduct() {
             formData.append('file', file)
 
             setLoading(true)
-            const res = await axios.post('/api/upload', formData, {
-                headers: {'content-type': 'multipart/form-data', Authorization: token}
-            })
+            const res = await axios.post(
+              'http://localhost:5000/api/upload',
+              formData,
+              {
+                headers: {
+                  'content-type': 'multipart/form-data',
+                  Authorization: token,
+                },
+              }
+            );
             setLoading(false)
             setImages(res.data)
 
@@ -81,9 +88,13 @@ function CreateProduct() {
         try {
             if(!isAdmin) return alert("You're not an admin")
             setLoading(true)
-            await axios.post('/api/destroy', {public_id: images.public_id}, {
-                headers: {Authorization: token}
-            })
+            await axios.post(
+              'http://localhost:5000/api/destroy',
+              { public_id: images.public_id },
+              {
+                headers: { Authorization: token },
+              }
+            );
             setLoading(false)
             setImages(false)
         } catch (err) {
@@ -103,13 +114,21 @@ function CreateProduct() {
             if(!images) return alert("No Image Upload")
 
             if(onEdit){
-                await axios.put(`/api/products/${product._id}`, {...product, images}, {
-                    headers: {Authorization: token}
-                })
+                await axios.put(
+                  `http://localhost:5000/api/products/${product._id}`,
+                  { ...product, images },
+                  {
+                    headers: { Authorization: token },
+                  }
+                );
             }else{
-                await axios.post('/api/products', {...product, images}, {
-                    headers: {Authorization: token}
-                })
+                await axios.post(
+                  'http://localhost:5000/api/products',
+                  { ...product, images },
+                  {
+                    headers: { Authorization: token },
+                  }
+                );
             }
             setCallback(!callback)
             history.push("/")
