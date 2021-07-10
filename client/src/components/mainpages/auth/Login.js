@@ -1,13 +1,13 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
-
+import { GlobalState } from '../../../GlobalState'
 function Login() {
     const [user, setUser] = useState({
         email:'', password: ''
     })
     const state = useContext(GlobalState);
-    const token= state.token;
+    const [token, setToken] = state.token;
     const onChangeInput = e =>{
         const {name, value} = e.target;
         setUser({...user, [name]:value})
@@ -17,7 +17,7 @@ function Login() {
         e.preventDefault()
         try {
            const res = await axios.post('http://localhost:5000/user/login', { ...user });
-           token = res.data.accesstoken
+           setToken(res.data.accesstoken)
 
             localStorage.setItem('firstLogin', true)
             
