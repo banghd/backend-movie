@@ -13,9 +13,9 @@ function UserAPI(token) {
                 try {
                     const res = await axios.get(
                       'http://localhost:5000/user/infor',
-                      {
-                        headers: { Authorization: token },
-                      }
+                    //   {
+                    //     headers: { Authorization: token },
+                    //   }
                     );
 
                     setIsLogged(true)

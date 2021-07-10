@@ -6,7 +6,8 @@ function Login() {
     const [user, setUser] = useState({
         email:'', password: ''
     })
-
+    const state = useContext(GlobalState);
+    const token= state.token;
     const onChangeInput = e =>{
         const {name, value} = e.target;
         setUser({...user, [name]:value})
@@ -15,7 +16,8 @@ function Login() {
     const loginSubmit = async e =>{
         e.preventDefault()
         try {
-            await axios.post('http://localhost:5000/user/login', { ...user });
+           const res = await axios.post('http://localhost:5000/user/login', { ...user });
+           token = res.data.accesstoken
 
             localStorage.setItem('firstLogin', true)
             
