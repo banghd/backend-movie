@@ -65,7 +65,7 @@ const productCtrl = {
     },
     createProduct: async(req, res) =>{
         try {
-            const {product_id, title, price, description, content, images, category} = req.body;
+            const {product_id, title, price, description, images, category, url} = req.body;
             if(!images) return res.status(400).json({msg: "No image upload"})
 
             const product = await Products.findOne({product_id})
@@ -73,7 +73,7 @@ const productCtrl = {
                 return res.status(400).json({msg: "This product already exists."})
 
             const newProduct = new Products({
-                product_id, title: title.toLowerCase(), price, description, content, images, category
+                product_id, title: title.toLowerCase(), price, description, images, category, url
             })
 
             await newProduct.save()
@@ -93,15 +93,37 @@ const productCtrl = {
     },
     updateProduct: async(req, res) =>{
         try {
-            const {title, price, description, content, images, category} = req.body;
+            const {title, price, description, content, images, category, url} = req.body;
             if(!images) return res.status(400).json({msg: "No image upload"})
 
             await Products.findOneAndUpdate({_id: req.params.id}, {
-                title: title.toLowerCase(), price, description, content, images, category
+                title: title.toLowerCase(), price, description, content, images, category, url
             })
 
             res.json({msg: "Updated a Product"})
         } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    likeProduct: async(req, res) => {
+        try {
+            const product = await Products.findById(req.params.id)
+            if (product.userLiked.includes(req.user.id)){
+                await Products.updateOne({_id: req.params.id}, {$set: {userLiked: product.userLiked.filter(item => item !== req.user.id), likes : product.likes - 1}})
+            } else {
+                product.userLiked.push(req.user.id)
+                await Products.updateOne({_id: req.params.id}, {$set: {userLiked: product.userLiked, likes : product.likes + 1}})
+            }
+
+            res.json({msg: "Updated a Product"})
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    sellProduct: async(req, res) => {
+        try {
+            await Products.updateOne({_id: req.params.id}, {$inc: {sold : 1}})
+        } catch (error) {
             return res.status(500).json({msg: err.message})
         }
     }

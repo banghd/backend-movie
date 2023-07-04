@@ -18,14 +18,14 @@ app.use(fileUpload({
 // Routes
 app.use('/user', require('./routes/userRouter'))
 app.use('/api', require('./routes/categoryRouter'))
-app.use('/api', require('./routes/upload'))
+app.use('/image', require('./routes/upload'))
 app.use('/api', require('./routes/productRouter'))
 app.use('/api', require('./routes/paymentRouter'))
 
 
 
 // Connect to mongodb
-const URI = process.env.MONGODB_URL
+const URI = process.env.MONGODB_URL || 'mongodb+srv://himyson132:PR7TJWDMKwpnGAqx@cluster0.skn9zzp.mongodb.net/movie-app'
 mongoose.connect(URI, {
     useCreateIndex: true,
     useFindAndModify: false,

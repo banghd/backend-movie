@@ -8,9 +8,9 @@ router.post('/login', userCtrl.login)
 
 router.get('/logout', userCtrl.logout)
 
-router.get('/refresh_token', userCtrl.refreshToken)
+router.post('/refresh-token', userCtrl.refreshToken)
 
-router.get('/infor', auth,  userCtrl.getUser)
+router.get('/information', auth,  userCtrl.getUser)
 
 router.patch('/addcart', auth, userCtrl.addCart)
 

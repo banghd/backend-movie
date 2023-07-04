@@ -24,7 +24,7 @@ const productSchema = new mongoose.Schema({
     },
     content:{
         type: String,
-        required: true
+        required: false
     },
     images:{
         type: Object,
@@ -41,6 +41,18 @@ const productSchema = new mongoose.Schema({
     sold:{
         type: Number,
         default: 0
+    },
+    userLiked: {
+        type: Array,
+        default: []
+    },
+    likes: {
+        type: Number,
+        default: 0
+    },
+    url: {
+        type: String,
+        default: ''
     }
 }, {
     timestamps: true //important

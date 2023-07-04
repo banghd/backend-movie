@@ -7,9 +7,9 @@ const fs = require('fs')
 
 // we will upload image on cloudinary
 cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.CLOUD_API_KEY,
-    api_secret: process.env.CLOUD_API_SECRET
+    cloud_name: 'dvg9ov3lu',
+    api_key: '568292474936495',
+    api_secret: '5eRlKAgUacNebZ77-VyXESx-eGM'
 })
 
 // Upload image only admin can use
@@ -17,7 +17,7 @@ router.post('/upload',auth , authAdmin, (req, res) =>{
     try {
         if(!req.files || Object.keys(req.files).length === 0)
             return res.status(400).json({msg: 'No files were uploaded.'})
-        
+
         const file = req.files.file;
         if(file.size > 1024*1024) {
             removeTmp(file.tempFilePath)
@@ -58,7 +58,7 @@ router.post('/destroy',auth , authAdmin, (req, res) =>{
     } catch (err) {
         return res.status(500).json({msg: err.message})
     }
-    
+
 })
 
 
